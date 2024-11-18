@@ -13,9 +13,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 let adminRouter = require("./routes/admin");
-let clienteRouter = require("./routes/cliente");
-let estabelecimentoRouter = require("./routes/estabelecimento");
-let pagamentoRouter = require("./routes/pagamento");
+
 
 
 let socketRouter = require("./routes/socket");
@@ -60,9 +58,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
 app.use("/api/admin", adminRouter);
-app.use("/api/cliente", clienteRouter);
-app.use("/api/estabelecimento", estabelecimentoRouter);
-app.use("/api/pagamento", pagamentoRouter);
+
 
 app.use("/api/socket", socketRouter);
 

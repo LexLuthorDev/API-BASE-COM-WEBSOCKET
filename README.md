@@ -122,6 +122,7 @@ Certifique-se de que você possui os seguintes softwares instalados:
 2. Instale as dependências:
 
    ```
+   cd API-BASE-COM-WEBSOCKET
    cd api
    npm install
    ```

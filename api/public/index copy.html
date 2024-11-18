@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste WebSocket</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1>Teste de WebSocket com Socket.IO</h1>
+    <input type="text" id="messageInput" placeholder="Digite uma mensagem">
+    <button id="sendMessageButton">Enviar Mensagem</button>
+    <ul id="messages"></ul>
+    <div id="status"></div>
+
+    <script>
+        const socket = io(); // Conectar ao servidor WebSocket
+
+        // Ouvir mensagens do servidor
+        socket.on('message', (msg) => {
+            const messagesList = document.getElementById('messages');
+            const messageItem = document.createElement('li');
+            messageItem.textContent = msg;
+            messagesList.appendChild(messageItem);
+        });
+
+        // Captura de erro de conexão
+        socket.on('connect_error', (err) => {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = 'Erro de conexão: ' + err.data.content; // Mostra a mensagem de erro personalizada
+            console.error('Erro de conexão:', err.data.content); // Loga o erro no console
+        });
+
+        // Enviar mensagem ao servidor
+        document.getElementById('sendMessageButton').onclick = () => {
+            const messageInput = document.getElementById('messageInput');
+            fetch('/test-socket', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: messageInput.value })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Mostra a resposta do servidor no console
+                messageInput.value = ''; // Limpa o campo de entrada
+            })
+            .catch(err => console.error('Erro ao enviar mensagem:', err));
+        };
+    </script>
+</body>
+</html>
